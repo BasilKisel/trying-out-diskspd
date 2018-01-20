@@ -1,0 +1,87 @@
+Azure virtual machine with Windows Server.
+Size is Basic A2, 2 vcpus, 3.5 GB memory, 4 data disks, 4x300 IOpS.
+
+
+PS C:\Users\kisel_vs> diskspd -w50 -W5 -b4K -c8G -F2 -o32 -Sh -L -r -d600 C:\testfile.foo
+
+Command Line: C:\Diskspd\amd64fre\diskspd.exe -w50 -W5 -b4K -c8G -F2 -o32 -Sh -L -r -d600 C:\testfile.foo
+
+Input parameters:
+
+        timespan:   1
+        -------------
+        duration: 600s
+        warm up time: 5s
+        cool down time: 0s
+        measuring latency
+        random seed: 0
+        path: 'C:\testfile.foo'
+                think time: 0ms
+                burst size: 0
+                software cache disabled
+                hardware write cache disabled, writethrough on
+                performing mix test (read/write ratio: 50/50)
+                block size: 4096
+                using random I/O (alignment: 4096)
+                number of outstanding I/O operations: 32
+                thread stride size: 0
+                IO priority: normal
+
+
+
+Results for timespan 1:
+*******************************************************************************
+
+actual test time:       600.00s
+thread count:           2
+proc count:             2
+
+CPU |  Usage |  User  |  Kernel |  Idle
+-------------------------------------------
+   0|   4.01%|   2.46%|    1.55%|  95.99%
+   1|   3.41%|   2.27%|    1.14%|  96.59%
+-------------------------------------------
+avg.|   3.71%|   2.37%|    1.35%|  96.29%
+
+Total IO
+thread |       bytes     |     I/Os     |     MB/s   |  I/O per s |  AvgLat  | LatStdDev |  file
+-----------------------------------------------------------------------------------------------------
+     0 |       496783360 |       121285 |       0.79 |     202.14 |  158.146 |   206.111 | C:\testfile.foo (8192MB)
+     1 |       495263744 |       120914 |       0.79 |     201.52 |  158.619 |   205.370 | C:\testfile.foo (8192MB)
+-----------------------------------------------------------------------------------------------------
+total:         992047104 |       242199 |       1.58 |     403.66 |  158.382 |   205.742
+
+Read IO
+thread |       bytes     |     I/Os     |     MB/s   |  I/O per s |  AvgLat  | LatStdDev |  file
+-----------------------------------------------------------------------------------------------------
+     0 |       248958976 |        60781 |       0.40 |     101.30 |  128.614 |   204.159 | C:\testfile.foo (8192MB)
+     1 |       248680448 |        60713 |       0.40 |     101.19 |  129.363 |   198.934 | C:\testfile.foo (8192MB)
+-----------------------------------------------------------------------------------------------------
+total:         497639424 |       121494 |       0.79 |     202.49 |  128.989 |   201.565
+
+Write IO
+thread |       bytes     |     I/Os     |     MB/s   |  I/O per s |  AvgLat  | LatStdDev |  file
+-----------------------------------------------------------------------------------------------------
+     0 |       247824384 |        60504 |       0.39 |     100.84 |  187.813 |   203.788 | C:\testfile.foo (8192MB)
+     1 |       246583296 |        60201 |       0.39 |     100.33 |  188.124 |   207.528 | C:\testfile.foo (8192MB)
+-----------------------------------------------------------------------------------------------------
+total:         494407680 |       120705 |       0.79 |     201.17 |  187.968 |   205.662
+
+
+  %-ile |  Read (ms) | Write (ms) | Total (ms)
+----------------------------------------------
+    min |      0.047 |      4.120 |      0.047
+   25th |      4.241 |     28.728 |      8.933
+   50th |     83.018 |    185.868 |    163.862
+   75th |    186.221 |    238.963 |    196.298
+   90th |    281.329 |    373.362 |    367.032
+   95th |    416.477 |    439.723 |    428.669
+   99th |    816.324 |    832.503 |    824.992
+3-nines |   1823.310 |   1800.465 |   1819.328
+4-nines |   7136.980 |   7223.410 |   7209.025
+5-nines |   7220.821 |   7242.229 |   7238.419
+6-nines |   7223.589 |   7322.167 |   7322.167
+7-nines |   7223.589 |   7322.167 |   7322.167
+8-nines |   7223.589 |   7322.167 |   7322.167
+9-nines |   7223.589 |   7322.167 |   7322.167
+    max |   7223.589 |   7322.167 |   7322.167
